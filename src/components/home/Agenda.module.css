@@ -1,0 +1,160 @@
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+  gap: clamp(2.5rem, 6vw, 7rem);
+  align-items: start;
+  padding: var(--section) var(--inline) 0;
+}
+
+.side {
+  position: sticky;
+  top: calc(var(--header) + 2rem);
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: var(--t-h2);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.intro {
+  margin: 1.25rem 0 1.75rem;
+  max-width: 28rem;
+  color: var(--tinta-suave);
+}
+
+.weekly {
+  margin-top: 2.75rem;
+  padding: 1.5rem;
+  background: var(--papel);
+  border: 1px solid var(--line);
+}
+
+.weeklyTitle {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.weekly li {
+  display: grid;
+  gap: 0.1rem;
+  padding-block: 0.6rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.975rem;
+}
+
+.weeklyWhen {
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ── Lista de fechas ── */
+.list {
+  border-top: 1px solid var(--line-strong);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: center;
+  padding-block: 1.15rem;
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.3s;
+}
+
+.item[data-past] {
+  opacity: 0.45;
+}
+
+.date {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.day {
+  font-family: var(--serif);
+  font-size: 2.6rem;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+}
+
+.weekday {
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+.eventTitle {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.detail {
+  margin-top: 0.15rem;
+  font-size: 0.95rem;
+  color: var(--tinta-suave);
+}
+
+.next {
+  padding: 0.3rem 0.6rem;
+  background: var(--tinta);
+  color: var(--lino);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.pastLabel {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .side {
+    position: static;
+  }
+
+  .weekly {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .item {
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    gap: 0.9rem;
+  }
+
+  .day {
+    font-size: 2.2rem;
+  }
+
+  .date {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .next,
+  .pastLabel {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: -0.4rem;
+  }
+}

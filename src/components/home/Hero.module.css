@@ -1,0 +1,188 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-areas:
+    "copy media"
+    "facts facts";
+  column-gap: clamp(2rem, 5vw, 6rem);
+  padding: clamp(2rem, 4vw, 4rem) var(--inline) 0;
+}
+
+.copy {
+  grid-area: copy;
+  align-self: center;
+  padding-block: 2rem;
+}
+
+.place {
+  font-size: var(--t-small);
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: var(--t-h1);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  max-width: 14ch;
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 34rem;
+  margin-top: 1.75rem;
+  color: var(--tinta-suave);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+.media {
+  grid-area: media;
+  position: relative;
+}
+
+/* La foto se recorta en arco, como el vano de las puertas de la casa */
+.photo {
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  aspect-ratio: 4 / 5;
+  background: var(--cielo);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 70%;
+}
+
+.facts {
+  grid-area: facts;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.facts li {
+  padding: 1.25rem 1.5rem 1.25rem 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.facts li + li {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--line);
+}
+
+/* ── Entrada: un único momento orquestado al cargar ── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes unveil {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.08);
+  }
+}
+
+.hero [data-hero-step] {
+  animation: rise 0.9s var(--ease) both;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+.hero [data-hero-step="0"] { --d: 150; }
+.hero [data-hero-step="1"] { --d: 250; }
+.hero [data-hero-step="2"] { --d: 450; }
+.hero [data-hero-step="3"] { --d: 600; }
+.hero [data-hero-step="4"] { --d: 900; }
+
+.photo {
+  animation: unveil 1.3s var(--ease) both 0.1s;
+}
+
+.photo img {
+  animation: settle 1.8s var(--ease) both 0.1s;
+}
+
+/* Mientras corre la intro, la entrada del hero espera a que suba la cortina */
+:global(html:not([data-intro="seen"])) .hero [data-hero-step] {
+  animation-delay: calc((var(--d, 0) + 2350) * 1ms);
+}
+
+:global(html:not([data-intro="seen"])) .photo,
+:global(html:not([data-intro="seen"])) .photo img {
+  animation-delay: 2.45s;
+}
+
+@media (max-width: 960px) {
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .facts li:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .facts li:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "copy"
+      "media"
+      "facts";
+  }
+
+  .copy {
+    padding-block: 1rem 2.5rem;
+  }
+
+  .title {
+    max-width: 13ch;
+  }
+
+  .photo {
+    aspect-ratio: 5 / 5.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .facts li,
+  .facts li + li {
+    padding: 1rem 0;
+    border-left: 0;
+  }
+
+  .facts li + li {
+    border-top: 1px solid var(--line);
+  }
+}

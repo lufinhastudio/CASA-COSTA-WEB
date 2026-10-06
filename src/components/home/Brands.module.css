@@ -1,0 +1,133 @@
+.section {
+  padding: var(--section) var(--inline) 0;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: var(--t-h2);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  max-width: 14ch;
+}
+
+.intro {
+  max-width: 26rem;
+  justify-self: end;
+  color: var(--tinta-suave);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem) clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+.card {
+  display: grid;
+  gap: 0.7rem;
+  height: 100%;
+  grid-template-rows: minmax(0, 1fr) auto;
+  text-decoration: none;
+}
+
+.photo {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--cielo);
+}
+
+.wide .photo {
+  position: relative;
+  aspect-ratio: auto;
+  min-height: 0;
+}
+
+/* La foto apaisada llena la fila sin estirarla */
+.wide .photo img {
+  position: absolute;
+  inset: 0;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+
+.card:hover .photo img {
+  transform: scale(1.03);
+}
+
+.handle {
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 0.2s;
+}
+
+.card:hover .handle {
+  text-decoration-color: currentColor;
+}
+
+.more {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem 0 2.2rem;
+  border-top: 1px solid var(--line-strong);
+}
+
+.more p {
+  font-family: var(--serif);
+  font-size: var(--t-h3);
+  line-height: 1.2;
+  max-width: 12ch;
+}
+
+@media (max-width: 760px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .intro {
+    justify-self: start;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wide .photo {
+    aspect-ratio: 540 / 425;
+  }
+
+  .more {
+    padding-bottom: 1.6rem;
+  }
+
+  .more p {
+    font-size: 1.35rem;
+  }
+
+  .more a {
+    font-size: 0.9rem;
+  }
+}

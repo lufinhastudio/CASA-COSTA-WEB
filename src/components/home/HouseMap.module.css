@@ -1,0 +1,296 @@
+.section {
+  padding: var(--section) var(--inline) 0;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: var(--t-h2);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.intro {
+  max-width: 30rem;
+  color: var(--tinta-suave);
+  justify-self: end;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(16rem, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+}
+
+/* Marco de papel: la ilustración ya tiene borde de acuarela */
+.mapFrame {
+  padding: clamp(0.5rem, 1vw, 0.9rem);
+  background: var(--papel);
+  border: 1px solid var(--line);
+}
+
+.map {
+  position: relative;
+}
+
+.map img {
+  width: 100%;
+  height: auto;
+}
+
+/* ── Puntos sobre el plano ── */
+.pin {
+  position: absolute;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -1.125rem 0 0 -1.125rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pin::before,
+.pin::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* núcleo */
+.pin::before {
+  inset: 0.65rem;
+  background: var(--tinta);
+  box-shadow: 0 0 0 2px var(--papel);
+  transition: inset 0.3s var(--ease), background-color 0.3s;
+}
+
+/* aro que respira, sólo en los que no están activos */
+.pin::after {
+  inset: 0.2rem;
+  border: 1.5px solid var(--tinta);
+  opacity: 0.55;
+  animation: breathe 2.4s var(--ease) infinite;
+}
+
+.pin[aria-pressed="true"]::before {
+  inset: 0.45rem;
+  background: var(--papel);
+  box-shadow: 0 0 0 0.35rem var(--tinta);
+}
+
+.pin[aria-pressed="true"]::after {
+  animation: none;
+  opacity: 0;
+}
+
+.pinLabel {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.35rem);
+  translate: -50% 0.25rem;
+  padding: 0.3rem 0.6rem;
+  background: var(--tinta);
+  color: var(--lino);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, translate 0.2s var(--ease);
+}
+
+.pin:hover .pinLabel,
+.pin:focus-visible .pinLabel {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.15;
+  }
+}
+
+/* ── Panel ── */
+.panel {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.list {
+  border-top: 1px solid var(--line);
+}
+
+.list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.7rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.2s, padding 0.3s var(--ease);
+}
+
+.list button::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.list button:hover {
+  color: var(--tinta);
+}
+
+.list button[aria-pressed="true"] {
+  color: var(--tinta);
+  padding-left: 0.75rem;
+}
+
+.list button[aria-pressed="true"]::after {
+  opacity: 1;
+  background: var(--tinta);
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1.1rem;
+  align-items: start;
+  animation: swap 0.5s var(--ease) both;
+}
+
+.detailImage {
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 999px 999px 0 0;
+  background: var(--cielo);
+}
+
+.detailImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detailTitle {
+  font-family: var(--serif);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.detailText {
+  margin-top: 0.5rem;
+  color: var(--tinta-suave);
+  font-size: 0.975rem;
+}
+
+@keyframes swap {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .intro {
+    justify-self: start;
+  }
+
+  /* En pantallas chicas la lista se vuelve una fila deslizable */
+  .list {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    border-top: 0;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+
+  .list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .list li {
+    flex: none;
+  }
+
+  .list button {
+    width: auto;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--line-strong);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .list button::after {
+    display: none;
+  }
+
+  .list button[aria-pressed="true"] {
+    padding-left: 0.85rem;
+    background: var(--tinta);
+    border-color: var(--tinta);
+    color: var(--lino);
+  }
+
+  .detail {
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .pin {
+    width: 1.9rem;
+    height: 1.9rem;
+    margin: -0.95rem 0 0 -0.95rem;
+  }
+
+  .pin::before {
+    inset: 0.55rem;
+  }
+
+  .pin[aria-pressed="true"]::before {
+    inset: 0.42rem;
+    box-shadow: 0 0 0 0.28rem var(--tinta);
+  }
+}

@@ -1,0 +1,26 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: var(--t-small);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  flex: none;
+}
+
+.status[data-open] {
+  color: var(--tinta);
+}
+
+.status[data-open] .dot {
+  border-color: var(--vitral);
+  background: var(--vitral);
+  box-shadow: 0 0 0 3px rgb(95 156 51 / 0.18);
+}
