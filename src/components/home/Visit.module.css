@@ -66,19 +66,18 @@
 
 .map {
   min-height: 26rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   background: var(--papel);
-  padding: 0.6rem;
+  padding: 0.75rem;
+  box-shadow: 0 1.25rem 2.5rem rgb(27 33 77 / 0.08);
 }
 
-/* El mapa se tiñe hacia la paleta de la casa */
 .map iframe {
   display: block;
   width: 100%;
   height: 100%;
   min-height: 26rem;
   border: 0;
-  filter: grayscale(1) sepia(0.25) hue-rotate(185deg) saturate(1.4) contrast(0.95);
 }
 
 @media (max-width: 860px) {

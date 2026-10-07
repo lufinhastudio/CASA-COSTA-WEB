@@ -57,144 +57,401 @@
   color: var(--muted);
 }
 
-/* ── Lista de fechas ── */
-.list {
-  border-top: 1px solid var(--line-strong);
+/* ── Calendario: réplica de la pieza "Octubre en Casa Costa" de Instagram ──
+   Tarjeta crema redondeada sobre el rosa acuarelado, grilla marrón fina,
+   números en negrita y los stickers originales de cada actividad.
+   Los tamaños internos usan unidades del contenedor (cqi) para que la
+   tarjeta se vea igual de proporcionada en desktop y en el celular. */
+.calendarColumn {
+  min-width: 0;
+  padding: clamp(1rem, 4vw, 3.25rem);
+  background: #e8b9b9 url("/img/agenda/fondo-rosa.jpg") center top / 100% auto repeat-y;
 }
 
-.item {
+.calendar {
+  --ink: #5a3328;
+  --grid: #7d7372;
+  --pink: #c54d71;
+  container-type: inline-size;
+  padding: 4.5cqi 2cqi 3cqi;
+  background: #f6f1ee;
+  border: 1.5px solid #b8adbd;
+  border-radius: 3.5cqi;
+  box-shadow: 0 1.2rem 2.4rem rgb(122 52 68 / 0.12);
+}
+
+.calendarTop {
   display: grid;
-  grid-template-columns: 5.5rem minmax(0, 1fr) auto;
-  gap: 1.25rem;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding-block: 1.15rem;
-  border-bottom: 1px solid var(--line);
-  transition: opacity 0.3s;
+  margin-bottom: 7cqi;
 }
 
-.item[data-past] {
-  opacity: 0.45;
+.calendarTitle {
+  width: 41cqi;
+  margin: 0;
+  line-height: 0;
 }
 
-.date {
+.calendarTitle img {
+  width: 100%;
+  height: auto;
+}
+
+.calendarIcon {
+  width: 4.5cqi;
+  height: 4.5cqi;
+  margin-inline: 4cqi;
+  color: #3d2a26;
+}
+
+.calendarIcon:last-child {
+  justify-self: end;
+}
+
+.calendarIcon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.weekdays,
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.weekdays span {
+  padding: 0 0 1.6cqi 1.1cqi;
+  border-bottom: 1px solid var(--grid);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 2cqi;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Las líneas verticales separan los días y suben hasta los nombres */
+.weekdays span + span,
+.cell:not(:nth-child(7n + 1)) {
+  border-left: 1px solid var(--grid);
+}
+
+.cell {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 141 / 182;
+}
+
+.cell:nth-child(n + 8) {
+  border-top: 1px solid var(--grid);
+}
+
+.plainDay {
+  position: absolute;
+  top: 2.4cqi;
+  left: 1.1cqi;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.75cqi;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.eventDay {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dayNumber {
+  position: absolute;
+  top: 2.1cqi;
+  left: 1.1cqi;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 3.5cqi;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.sticker {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transform-origin: 50% 70%;
+  transition: transform 0.35s var(--ease);
+}
+
+.eventFallback {
+  position: absolute;
+  inset: auto 0.6cqi 1.5cqi;
+  padding: 0.6cqi;
+  background: #efe3ea;
+  color: var(--pink);
+  font-size: 1.5cqi;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Al pasar o elegir, el sticker se levanta un poquito, como papel pegado */
+.eventDay:hover .sticker,
+.eventDay:focus-visible .sticker {
+  transform: translateY(-0.6cqi) rotate(-1.5deg);
+}
+
+.eventDay:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: -3px;
+}
+
+/* El marco rosa va por encima del sticker para que siempre se vea */
+.eventDay[aria-pressed="true"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  box-shadow: inset 0 0 0 0.45cqi var(--pink);
+  pointer-events: none;
+}
+
+.eventDay[aria-pressed="true"] .sticker {
+  transform: translateY(-0.6cqi) rotate(-1.5deg);
+}
+
+/* El próximo evento lleva un puntito rosa al lado del número */
+.eventDay[data-next]::after {
+  content: "";
+  position: absolute;
+  top: 3.1cqi;
+  right: 1.4cqi;
+  width: 1.1cqi;
+  height: 1.1cqi;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+/* Ficha que aparece al elegir una fecha, como los lugares del plano */
+.detail {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) 7.5rem;
+  gap: 1.35rem;
+  align-items: start;
+  margin-top: clamp(0.9rem, 2.5vw, 1.5rem);
+  padding: 1.4rem;
+  background: #f6f1ee;
+  border: 1.5px solid #b8adbd;
+  border-radius: 1.25rem;
+  box-shadow: 0 0.8rem 1.8rem rgb(122 52 68 / 0.1);
+  scroll-margin-top: calc(var(--header) + 1rem);
+  animation: detailIn 0.5s var(--ease) both;
+}
+
+.detailDate {
   display: flex;
-  align-items: baseline;
-  gap: 0.45rem;
+  flex-direction: column;
+  align-items: start;
+  padding-right: 1rem;
+  border-right: 1px solid var(--line);
 }
 
-.day {
+.detailWeekday {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.detailNumber {
   font-family: var(--serif);
-  font-size: 2.6rem;
+  font-size: 3.7rem;
   font-weight: 500;
   line-height: 1;
   font-variant-numeric: lining-nums;
 }
 
-.weekday {
-  font-size: var(--t-small);
+.detailMonth {
+  font-size: 0.8rem;
   color: var(--muted);
 }
 
-.eventTitle {
+.detailBody {
+  min-width: 0;
+}
+
+.detailTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+}
+
+.detailEyebrow {
+  padding-top: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c54d71;
+}
+
+.closeDetail {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--tinta);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.closeDetail:hover {
+  background: var(--lino);
+}
+
+.detailEvent + .detailEvent {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.detailTitle {
   font-family: var(--serif);
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
 }
 
-.detail {
-  margin-top: 0.15rem;
-  font-size: 0.95rem;
+.detailText {
+  margin-top: 0.35rem;
   color: var(--tinta-suave);
+  font-size: 0.95rem;
 }
 
-.next {
-  padding: 0.3rem 0.6rem;
-  background: var(--tinta);
-  color: var(--lino);
-  font-size: 0.8rem;
-  white-space: nowrap;
+.detailLink {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  border-bottom: 1px solid currentColor;
+  color: var(--tinta);
+  font-size: 0.9rem;
+  text-decoration: none;
 }
 
-.pastLabel {
-  font-size: 0.8rem;
-  color: var(--muted);
-  white-space: nowrap;
+@keyframes detailIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.detailSticker {
+  align-self: center;
+  rotate: -2deg;
+}
+
+.detailSticker img {
+  width: 100%;
+  height: auto;
 }
 
 @media (max-width: 900px) {
   .section {
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   .side {
-    position: static;
+    display: contents;
+  }
+
+  .sideIntro {
+    order: 0;
+  }
+
+  .calendarColumn {
+    order: 1;
+    width: 100%;
   }
 
   .weekly {
-    margin-top: 2rem;
+    order: 2;
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .calendarColumn {
+    align-self: stretch;
+    margin-inline: calc(var(--gutter) * -1);
+    width: auto;
+    padding: 1.4rem 0.7rem;
+  }
+
+  /* En el celular los textos de la grilla necesitan un mínimo para leerse */
+  .weekdays span {
+    padding-left: 0;
+    text-align: center;
+    font-size: max(2cqi, 0.55rem);
+  }
+
+  .plainDay {
+    font-size: max(1.75cqi, 0.62rem);
+  }
+
+  .dayNumber {
+    font-size: max(3.5cqi, 0.85rem);
+  }
+
+  .detail {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .detailSticker {
+    display: none;
+  }
+
+  .detailDate {
+    padding-right: 0.65rem;
+  }
+
+  .detailNumber {
+    font-size: 3rem;
+  }
+
+  .detailMonth {
+    font-size: 0.72rem;
   }
 }
 
 @media (max-width: 600px) and (prefers-reduced-motion: no-preference) {
-  .list[data-scroll-reveal] .item {
-    position: relative;
-    border-bottom: 0;
+  .calendar[data-scroll-reveal] .eventDay {
+    transition: opacity 0.65s ease, transform 0.8s var(--ease);
   }
 
-  .list[data-scroll-reveal] .item::after {
-    content: "";
-    position: absolute;
-    inset: auto 0 0;
-    height: 1px;
-    background: var(--line);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.9s var(--ease);
-  }
-
-  .list[data-scroll-reveal] .item[data-visible]::after {
-    transform: scaleX(1);
-  }
-
-  .list[data-scroll-reveal] .item > * {
-    transition: opacity 0.65s ease, transform 0.85s var(--ease);
-  }
-
-  .list[data-scroll-reveal] .item:not([data-visible]) > * {
+  .calendar[data-scroll-reveal] .eventDay:not([data-visible]) {
     opacity: 0;
-    transform: translateY(16px);
-  }
-
-  .list[data-scroll-reveal] .what {
-    transition-delay: 0.1s;
-  }
-
-  .list[data-scroll-reveal] .next,
-  .list[data-scroll-reveal] .pastLabel {
-    transition-delay: 0.15s;
-  }
-}
-
-@media (max-width: 480px) {
-  .item {
-    grid-template-columns: 4.25rem minmax(0, 1fr);
-    gap: 0.9rem;
-  }
-
-  .day {
-    font-size: 2.2rem;
-  }
-
-  .date {
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-
-  .next,
-  .pastLabel {
-    grid-column: 2;
-    justify-self: start;
-    margin-top: -0.4rem;
+    transform: translateY(12px);
   }
 }

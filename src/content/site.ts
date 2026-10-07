@@ -104,22 +104,36 @@ export const brands: Brand[] = [
 ];
 
 /* ── Agenda ──────────────────────────────────────────────────────────── */
-export type AgendaItem = { date: string; title: string; detail?: string };
+export type AgendaItem = { date: string; title: string; detail?: string; calendarLabel: string };
 
 export const agendaMonth = "Octubre";
 
 export const agenda: AgendaItem[] = [
-  { date: "2026-10-09", title: "Taller Mini Chef", detail: "Especial Halloween, para chicos" },
-  { date: "2026-10-16", title: "Tejiendo arrullos", detail: "Ronda para bebés" },
-  { date: "2026-10-16", title: "Tarde de automaquillaje" },
-  { date: "2026-10-17", title: "Yoga, clase abierta", detail: "En el patio" },
-  { date: "2026-10-19", title: "Taller de cerámica y vino" },
-  { date: "2026-10-21", title: "Taller de sushi", detail: "Con vinito" },
-  { date: "2026-10-23", title: "Taller Mini Chef", detail: "Especial Halloween, para chicos" },
-  { date: "2026-10-24", title: "Greta presenta su nueva colección" },
-  { date: "2026-10-25", title: "Bingo a beneficio de ALCEC" },
-  { date: "2026-10-29", title: "Flores", detail: "Merienda y armado floral" },
+  { date: "2026-10-09", title: "Taller Mini Chef", detail: "Especial Halloween, para chicos", calendarLabel: "Mini Chef" },
+  { date: "2026-10-16", title: "Tejiendo arrullos", detail: "Ronda para bebés", calendarLabel: "Arrullos" },
+  { date: "2026-10-16", title: "Tarde de automaquillaje", calendarLabel: "Maquillaje" },
+  { date: "2026-10-17", title: "Yoga, clase abierta", detail: "En el patio", calendarLabel: "Yoga" },
+  { date: "2026-10-19", title: "Taller de cerámica y vino", calendarLabel: "Cerámica" },
+  { date: "2026-10-21", title: "Taller de sushi", detail: "Con vinito", calendarLabel: "Sushi" },
+  { date: "2026-10-23", title: "Taller Mini Chef", detail: "Especial Halloween, para chicos", calendarLabel: "Mini Chef" },
+  { date: "2026-10-24", title: "Greta presenta su nueva colección", calendarLabel: "Greta" },
+  { date: "2026-10-25", title: "Bingo a beneficio de ALCEC", calendarLabel: "Bingo" },
+  { date: "2026-10-29", title: "Flores", detail: "Merienda y armado floral", calendarLabel: "Flores" },
 ];
+
+/* Stickers del calendario publicado en Instagram (recortados de la pieza original).
+   Uno por fecha: si una fecha tiene dos actividades, el sticker ya muestra las dos. */
+export const agendaStickers: Record<string, { src: string; width: number; height: number }> = {
+  "2026-10-09": { src: "/img/agenda/2026-10-09.png", width: 141, height: 187 },
+  "2026-10-16": { src: "/img/agenda/2026-10-16.png", width: 141, height: 181 },
+  "2026-10-17": { src: "/img/agenda/2026-10-17.png", width: 141, height: 181 },
+  "2026-10-19": { src: "/img/agenda/2026-10-19.png", width: 141, height: 180 },
+  "2026-10-21": { src: "/img/agenda/2026-10-21.png", width: 141, height: 180 },
+  "2026-10-23": { src: "/img/agenda/2026-10-23.png", width: 141, height: 180 },
+  "2026-10-24": { src: "/img/agenda/2026-10-24.png", width: 141, height: 180 },
+  "2026-10-25": { src: "/img/agenda/2026-10-25.png", width: 141, height: 164 },
+  "2026-10-29": { src: "/img/agenda/2026-10-29.png", width: 143, height: 164 },
+};
 
 export const weekly = [
   { day: "Miércoles", time: "8 hs", title: "Yoga para adultos", with: "con Juliana López" },
