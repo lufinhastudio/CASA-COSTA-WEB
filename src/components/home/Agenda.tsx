@@ -109,9 +109,6 @@ export function Agenda() {
             Tocá una fecha del calendario para ver qué pasa en la casa ese día. Los cupos son limitados: para anotarte, escribinos
             por Instagram.
           </p>
-          <a className="btn btn--ghost" href={site.instagram.dm} target="_blank" rel="noreferrer">
-            Escribir para anotarme
-          </a>
         </div>
 
         <div className={styles.weekly}>
@@ -125,6 +122,10 @@ export function Agenda() {
             ))}
           </ul>
         </div>
+
+        <a className={"btn btn--ghost " + styles.signup} href={site.instagram.dm} target="_blank" rel="noreferrer">
+          Escribir para anotarme
+        </a>
       </div>
 
       <div className={styles.calendarColumn}>

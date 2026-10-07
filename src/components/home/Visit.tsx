@@ -1,12 +1,5 @@
 import { site } from "@/content/site";
-import { OpenStatus } from "@/components/ui/OpenStatus";
 import styles from "./Visit.module.css";
-
-const entrances = [
-  { name: "Principal", where: "en la esquina de Erausquin y 9 de Julio" },
-  { name: "Con rampa", where: "por calle Erausquin" },
-  { name: "Por el patiecito", where: "sobre 9 de Julio, entre verdes" },
-];
 
 export function Visit() {
   return (
@@ -18,30 +11,6 @@ export function Visit() {
           <br />
           {site.address.city}
         </address>
-
-        <dl className={styles.data}>
-          <div>
-            <dt>Horario</dt>
-            <dd>
-              {site.hours.label}
-              <br />
-              {site.hours.cafe}
-              <OpenStatus className={styles.status} />
-            </dd>
-          </div>
-          <div>
-            <dt>Entradas</dt>
-            <dd>
-              <ul>
-                {entrances.map((entrance) => (
-                  <li key={entrance.name}>
-                    <strong>{entrance.name}</strong>, {entrance.where}
-                  </li>
-                ))}
-              </ul>
-            </dd>
-          </div>
-        </dl>
 
         <div className={styles.actions}>
           <a className="btn" href={site.address.mapsUrl} target="_blank" rel="noreferrer">Abrir en Google Maps</a>

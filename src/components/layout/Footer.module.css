@@ -73,6 +73,26 @@
   color: var(--tinta-suave);
 }
 
+/* Horarios: lo que más se busca al final de la página */
+.hours {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  font-size: 0.95rem;
+}
+
+.hours p + p {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--line-strong);
+}
+
+.status {
+  justify-content: center;
+}
+
 .bottom {
   display: flex;
   flex-wrap: wrap;
@@ -90,6 +110,20 @@
 }
 
 @media (max-width: 640px) {
+  .hours {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .hours p + p {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .status {
+    margin-top: 0.5rem;
+  }
+
   .bottom {
     flex-direction: column;
     align-items: center;

@@ -32,6 +32,11 @@
   border: 1px solid var(--line);
 }
 
+/* El botón cierra la columna: primero ves qué hay, después te anotás */
+.signup {
+  margin-top: 1.25rem;
+}
+
 .weeklyTitle {
   font-family: var(--serif);
   font-size: 1.5rem;
@@ -390,6 +395,12 @@
   .calendarColumn {
     order: 1;
     width: 100%;
+  }
+
+  .signup {
+    order: 3;
+    align-self: flex-start;
+    margin-top: -0.75rem;
   }
 
   .weekly {

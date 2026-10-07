@@ -4,16 +4,19 @@ import styles from "./About.module.css";
 const ways = [
   {
     term: "Comprar",
+    image: { src: "/img/casa/salas.jpg", width: 800, height: 1000 },
     text: "Marcas de la zona que antes había que buscar una por una por Instagram, ahora en la misma casa y con atención todos los días.",
     mobileText: "Diseño, deco y regalos de marcas de la zona.",
   },
   {
     term: "Merendar",
+    image: { src: "/img/casa/taza.jpg", width: 1000, height: 863 },
     text: "Un café con chipá o algo dulce, para hacer una pausa en el recorrido o juntarte con alguien.",
     mobileText: "Un café y algo rico para hacer una pausa.",
   },
   {
     term: "Hacer algo distinto",
+    image: { src: "/img/casa/flores.jpg", width: 900, height: 1125 },
     text: "Talleres, clases de yoga y encuentros que cambian todos los meses.",
     mobileText: "Talleres, yoga y encuentros que cambian cada mes.",
   },
@@ -55,17 +58,20 @@ export function About() {
           </span>
         </p>
 
-        <dl className={styles.ways}>
+        <ul className={styles.ways}>
           {ways.map((way) => (
-            <div key={way.term}>
-              <dt>{way.term}</dt>
-              <dd>
+            <li key={way.term} className={styles.way}>
+              <span className={styles.wayPhoto}>
+                <Image src={way.image.src} alt="" width={way.image.width} height={way.image.height} sizes="5rem" />
+              </span>
+              <span className={styles.wayText}>
+                <strong className={styles.wayTerm}>{way.term}</strong>
                 <span className={styles.desktopOnly}>{way.text}</span>
                 <span className={styles.mobileOnly}>{way.mobileText}</span>
-              </dd>
-            </div>
+              </span>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );

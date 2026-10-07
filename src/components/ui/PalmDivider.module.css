@@ -1,0 +1,43 @@
+.divider {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.25rem;
+  max-width: 24rem;
+  margin: clamp(3.5rem, 7vw, 6rem) auto 0;
+  padding-inline: var(--gutter);
+  color: var(--tinta);
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  margin-bottom: 0.35rem;
+  background: var(--line-strong);
+}
+
+.palm {
+  flex: none;
+  width: auto;
+  height: 2.6rem;
+  transform-origin: 52% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .divider:hover .palm {
+    animation: sway 1.2s ease-in-out;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(-7deg);
+  }
+  65% {
+    transform: rotate(5deg);
+  }
+}

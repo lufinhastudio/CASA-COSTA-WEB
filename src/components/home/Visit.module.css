@@ -22,44 +22,9 @@
   line-height: 1.35;
 }
 
-.data {
-  margin: 2rem 0 2.25rem;
-  border-top: 1px solid var(--line);
-}
-
-.data > div {
-  display: grid;
-  grid-template-columns: 7rem minmax(0, 1fr);
-  gap: 1rem;
-  padding-block: 1rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.data dt {
-  font-size: var(--t-small);
-  color: var(--muted);
-  padding-top: 0.15rem;
-}
-
-.data dd {
-  margin: 0;
-}
-
-.status {
-  display: flex;
-  margin-top: 0.6rem;
-}
-
-.data li + li {
-  margin-top: 0.35rem;
-}
-
-.data strong {
-  font-weight: 500;
-}
-
 .actions {
   display: flex;
+  margin-top: 2rem;
   flex-wrap: wrap;
   gap: 0.75rem;
 }
@@ -88,10 +53,5 @@
   .map,
   .map iframe {
     min-height: 20rem;
-  }
-
-  .data > div {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.35rem;
   }
 }

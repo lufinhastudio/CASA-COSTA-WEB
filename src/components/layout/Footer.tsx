@@ -1,5 +1,6 @@
 import { PalmMark } from "@/components/ui/PalmMark";
 import { site } from "@/content/site";
+import { OpenStatus } from "@/components/ui/OpenStatus";
 import styles from "./Footer.module.css";
 
 export function Footer() {
@@ -14,6 +15,12 @@ export function Footer() {
         </div>
         <p className={styles.name}>Casa Costa</p>
         <p className={styles.tagline}>{site.tagline}</p>
+      </div>
+
+      <div className={styles.hours}>
+        <p>{site.hours.label}</p>
+        <p>{site.hours.cafe}</p>
+        <OpenStatus className={styles.status} />
       </div>
 
       <div className={styles.bottom}>
