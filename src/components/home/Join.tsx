@@ -6,7 +6,7 @@ export function Join() {
   return (
     <section className={styles.section} id="sumate" aria-labelledby="join-title">
       <div className={styles.engraving} aria-hidden="true">
-        <Image src="/img/casa/grabado-parra.jpg" alt="" width={963} height={600} sizes="(max-width: 860px) 100vw, 40vw" data-drift />
+        <Image src="/img/casa/grabado-parra-hd.png" alt="" width={1589} height={990} sizes="(max-width: 860px) 100vw, 40vw" data-drift />
       </div>
 
       <div className={styles.content}>

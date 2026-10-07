@@ -18,6 +18,21 @@
   display: block;
   width: auto;
   height: clamp(4.5rem, 8vw, 6rem);
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+@keyframes palmSway {
+  0%, 100% { transform: rotate(0); }
+  28% { transform: rotate(-9deg); }
+  62% { transform: rotate(6deg); }
+  82% { transform: rotate(-3deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mark:hover .palm {
+    animation: palmSway 1.2s ease-in-out;
+  }
 }
 
 /* "Est. | 2026" a los lados del tronco, como en el logo */

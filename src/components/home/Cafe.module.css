@@ -68,6 +68,16 @@
   object-fit: cover;
 }
 
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .giftPhoto img {
+    transition: transform 0.65s var(--ease);
+  }
+
+  .giftPhoto:hover img {
+    transform: scale(1.04);
+  }
+}
+
 .giftTitle {
   font-family: var(--serif);
   font-size: var(--t-h3);

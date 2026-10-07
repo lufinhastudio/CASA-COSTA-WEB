@@ -21,10 +21,10 @@ export function About() {
     <section className={styles.about} aria-labelledby="about-title">
       <div className={styles.engraving}>
         <Image
-          src="/img/casa/grabado-palmeras.jpg"
+          src="/img/casa/grabado-palmeras-hd.png"
           alt=""
-          width={971}
-          height={620}
+          width={1570}
+          height={1002}
           sizes="(max-width: 860px) 100vw, 50vw"
           data-drift
         />
