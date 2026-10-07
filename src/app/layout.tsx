@@ -41,9 +41,9 @@ export const viewport: Viewport = {
   themeColor: "#efebe1",
 };
 
-/* Corre antes de pintar: si la intro ya se vio en esta sesión (o se pidió
-   reducir el movimiento) marca <html data-intro="seen"> y el CSS la omite. */
-const introScript = `try{if(sessionStorage.getItem("casacosta:intro")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.intro="seen"}catch(e){}`;
+/* Corre antes de pintar: en una recarga evita restaurar el scroll anterior
+   y omite la intro sólo si se pidió reducir el movimiento. */
+const introScript = `if(performance.getEntriesByType("navigation")[0]?.type==="reload"){try{history.scrollRestoration="manual"}catch(e){}window.scrollTo(0,0)}if(matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.intro="seen"`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

@@ -21,7 +21,12 @@ export function Footer() {
         <a className="text-link" href={site.instagram.url} target="_blank" rel="noreferrer">
           Instagram @{site.instagram.handle}
         </a>
-        <p className={styles.credit}>Propuesta de sitio por Lufinha Studio</p>
+        <p className={styles.credit}>
+          Propuesta de sitio por{" "}
+          <a className="text-link" href="https://www.lufinhastudio.dev/" target="_blank" rel="noreferrer">
+            Lufinha Studio
+          </a>
+        </p>
       </div>
     </footer>
   );

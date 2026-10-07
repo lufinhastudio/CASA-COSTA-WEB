@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { agenda, agendaMonth, site, weekly } from "@/content/site";
 import styles from "./Agenda.module.css";
 
@@ -14,7 +14,46 @@ function todayInArgentina() {
 export function Agenda() {
   /* Se calcula en el navegador para no fijar "hoy" en el HTML generado. */
   const [today, setToday] = useState<string | null>(null);
+  const listRef = useRef<HTMLOListElement>(null);
   useEffect(() => setToday(todayInArgentina()), []);
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+
+    const mobile = window.matchMedia("(max-width: 600px)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let observer: IntersectionObserver | undefined;
+
+    const setupReveal = () => {
+      observer?.disconnect();
+      delete list.dataset.scrollReveal;
+      if (!mobile.matches || reducedMotion.matches || !("IntersectionObserver" in window)) return;
+
+      list.dataset.scrollReveal = "";
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            (entry.target as HTMLLIElement).dataset.visible = "";
+            observer?.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      );
+
+      list.querySelectorAll("li").forEach((item) => observer?.observe(item));
+    };
+
+    setupReveal();
+    mobile.addEventListener("change", setupReveal);
+    reducedMotion.addEventListener("change", setupReveal);
+    return () => {
+      observer?.disconnect();
+      mobile.removeEventListener("change", setupReveal);
+      reducedMotion.removeEventListener("change", setupReveal);
+    };
+  }, []);
 
   const nextDate = today ? agenda.find((item) => item.date >= today)?.date : undefined;
 
@@ -43,7 +82,7 @@ export function Agenda() {
         </div>
       </div>
 
-      <ol className={styles.list}>
+      <ol className={styles.list} ref={listRef}>
         {agenda.map((item, index) => {
           const date = new Date(`${item.date}T12:00:00-03:00`);
           const past = today !== null && item.date < today;

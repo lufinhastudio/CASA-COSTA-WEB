@@ -47,11 +47,14 @@ export function SiteHeader() {
         <button
           type="button"
           className={styles.menuButton}
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={menuOpen}
           aria-controls="menu-movil"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          {menuOpen ? "Cerrar" : "Menú"}
+          <svg className={styles.menuIcon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            {menuOpen ? <path d="M5 5l14 14M19 5L5 19" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
+          </svg>
         </button>
       </div>
 

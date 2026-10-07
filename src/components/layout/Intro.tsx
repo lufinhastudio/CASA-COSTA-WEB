@@ -5,12 +5,11 @@ import { PalmMark } from "@/components/ui/PalmMark";
 import { site } from "@/content/site";
 import styles from "./Intro.module.css";
 
-/* Intro con el logo: se ve una sola vez por sesión.
+/* Intro con el logo: se repite en cada carga de la página.
    - La animación es 100% CSS (si no hay JS, igual termina y se levanta sola).
    - El script inline de layout.tsx marca <html data-intro="seen"> antes de pintar
-     si ya se vio en esta sesión o si se pidió reducir el movimiento.
+     si se pidió reducir el movimiento.
    Los tiempos tienen que coincidir con Intro.module.css. */
-export const INTRO_KEY = "casacosta:intro";
 const LIFT_END_MS = 3000;     // la cortina terminó de subir
 const ENTRANCE_END_MS = 4600; // terminó también la entrada del hero
 
@@ -21,15 +20,20 @@ export function Intro() {
 
   useEffect(() => {
     const root = document.documentElement;
+    const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const isReload = navigation?.type === "reload";
+    if (isReload) window.scrollTo(0, 0);
     if (root.dataset.intro === "seen") {
       setMounted(false);
       return;
     }
 
-    try { sessionStorage.setItem(INTRO_KEY, "1"); } catch { /* modo privado */ }
     root.style.overflow = "hidden";
 
-    const unlock = window.setTimeout(() => { root.style.removeProperty("overflow"); }, 2300);
+    const unlock = window.setTimeout(() => {
+      if (isReload) window.scrollTo(0, 0);
+      root.style.removeProperty("overflow");
+    }, 2300);
     const unmount = window.setTimeout(() => setMounted(false), LIFT_END_MS);
     // Recién al final se marca como vista: cambiarlo antes alteraría los delays del hero en curso.
     const settle = window.setTimeout(() => { root.dataset.intro = "seen"; }, ENTRANCE_END_MS);

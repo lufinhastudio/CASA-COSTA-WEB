@@ -16,7 +16,7 @@
   animation: lift 0.8s cubic-bezier(0.76, 0, 0.24, 1) 2.2s forwards;
 }
 
-/* Si ya se vio en esta sesión, no se muestra nunca */
+/* Sin animación cuando se pidió reducir el movimiento */
 :global(html[data-intro="seen"]) .intro {
   display: none;
 }
